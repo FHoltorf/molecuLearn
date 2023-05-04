@@ -12,10 +12,10 @@ def evaluate_model(model, inputs):
         # For PyTorch model
         model.eval()
         with torch.no_grad():
-            return np.log(model(inputs).numpy())
+            return torch.nn.LogSoftmax(model(inputs)).numpy()
     elif isinstance(model, RandomForestClassifier):
         # For scikit-learn random forest model
-        return model.predict(inputs)
+        return np.log(model.predict(inputs))
 
     else:
         raise ValueError("Invalid model type. Supported types: PyTorch nn.Module, scikit-learn RandomForestClassifier")
